@@ -70,7 +70,8 @@ export const displayBooks = async (data) => {
     const books = data.docs;
     books.forEach(book =>  {
         const bookCard = document.createElement('div');
-        bookCard.className = 'book-card';
+        bookCard.classList.add('book-card');
+        bookCard.classList.add('shadow');
         let src;
         if (book.cover_i)src =`${coverUrl}b/id/${book.cover_i}-M.jpg`;
         else src='./images/default.jpg'
