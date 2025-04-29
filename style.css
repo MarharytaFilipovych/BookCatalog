@@ -90,18 +90,43 @@ h1{
 .search-bar, .filter{
     border: 0.2rem solid black;
     background: #756ab4;
-    padding: 0.5rem;
-
+    padding: 0.3rem 1rem;
 
 }
+#error, #loading{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    object-fit: contain;
+    visibility: hidden;
+    height: auto;
 
+}
+#error {
+    width:30rem;
+}
+
+#loading{
+    width: 15rem;
+    animation: rotation 2s linear infinite;
+
+}
+@keyframes rotation {
+    0%{
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100%{
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
 .search-bar{
     width: 14rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
     justify-content: space-between;
-    padding: 0.3rem 1rem;
 
 }
 .search-bar input{

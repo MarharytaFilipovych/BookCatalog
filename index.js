@@ -17,7 +17,8 @@ const subject = document.getElementById('subject');
 const year = document.getElementById('year');
 const pages = document.querySelector('.pages');
 const caretButtons = document.querySelectorAll('.caret');
-
+const error = document.getElementById('error');
+const loading = document.getElementById('loading');
 year.setAttribute('max', currentYear)
 const footer = document.querySelector('footer p')
 footer.innerHTML+= " " + currentYear;
@@ -55,16 +56,20 @@ subject.addEventListener('change', (e)=>{
 const search = ()=>{
     const offset = (PAGINATION.currentPage - 1)*perPage;
     searchParams.set('offset', offset.toString());
+    error.style.visibility = 'hidden';
+    loading.style.visibility = 'visible';
 
    fetchBooks(searchParams).then(data => {
         if(!data || !data.docs || !data.num_found){
+            error.style.visibility = 'visible';
+            loading.style.visibility = 'hidden';
             console.log("No books found");
             return;
         }
         PAGINATION.setPageCount(data.num_found, perPage);
        renderPageButtons();
        displayBooks(data.docs);
-
+       loading.style.visibility = 'hidden';
     })
 
 }
