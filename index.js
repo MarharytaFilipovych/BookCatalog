@@ -1,28 +1,27 @@
-const baseUrl = "https://openlibrary.org/";
+import {displayBooks, fetchBooks} from "./books.js";
+import {Pagination} from "./pagination.js";
+
+const perPage = 20;
 const searchParams = new URLSearchParams();
-const coverUrl = "https://covers.openlibrary.org/";
+searchParams.set('limit', '20');
 
-let currentPage = 1;
-const booksPerPage = 10;
+const currentYear = new Date().getFullYear().toString();
 
-const fetchBooks = async ()=>{
-    try{
-        const result = await fetch(baseUrl+ 'search.json?'+searchParams);
-        if(!result.ok){
-            console.log('Error fetching data!');
-            return;
-        }
-        return result.json();
-    }catch(e){
-        console.log(e);
-    }
-
-}
+const PAGINATION = new Pagination(1, perPage, 100);
 
 const titleInput = document.getElementById('title');
 const authorInput = document.getElementById('author');
 const sort = document.getElementById('sort');
 const searchButtons = document.querySelectorAll('.search-button');
+const subject = document.getElementById('subject');
+const year = document.getElementById('year');
+const pages = document.querySelector('.pages');
+const caretButtons = document.querySelectorAll('.caret');
+
+year.setAttribute('max', currentYear)
+const footer = document.querySelector('footer p')
+footer.innerHTML+= " " + currentYear;
+
 
 searchButtons.forEach((button, index) => {
     button.addEventListener('click', () => {
@@ -32,53 +31,96 @@ searchButtons.forEach((button, index) => {
         } else if (index === 1) {
             if (authorInput.value) searchParams.set('author', authorInput.value);
             else searchParams.delete('author');
-        fetchBooks().then(displayBooks)
-    }});
+
+        }else if (index === 2){
+            if(year.value)searchParams.set('first_publish_year', year.value)
+            else searchParams.delete('first_publish_year')
+        }
+        resetPage();
+    });
 });
 
 sort.addEventListener('change', (e) => {
     searchParams.set('sort', e.target.value);
-    fetchBooks().then(displayBooks)
-
+    resetPage();
 });
 
+subject.addEventListener('change', (e)=>{
+    if (e.target.value)searchParams.set('subject', e.target.value);
+    else searchParams.delete('subject');
+    resetPage();
 
-const displayBooks = (data)=>{
-    if(!data || ! data.docs){
-        console.log("No books found");
-        return;
-    }
-    const books = data.docs;
-    const bookSection = document.querySelector('.books');
-    bookSection.innerHTML = '';
-    if (books.length === 0) {
-        bookSection.innerHTML = '<p class="no-results">No books found matching your criteria</p>';
-        return;
-    }
-    books.forEach(book =>{
-        const bookCard = document.createElement('div');
-        bookCard.className = 'bookCard';
+})
 
-        let src = '';
-        if (book.cover_i)src =`${coverUrl}b/id/${book.cover_i}-M.jpg`;
+const search = ()=>{
+    const offset = (PAGINATION.currentPage - 1)*perPage;
+    searchParams.set('offset', offset.toString());
 
-
-        bookCard.innerHTML = `
-        <img src=${src} alt="${book.title} cover" class="book-cover">
-        <h3>${book.title}</h3>
-         <p>${book.author_name? book.author_name.join(','): 'unknown'}</p>
-        `
-        bookSection.appendChild(bookCard);
+   fetchBooks(searchParams).then(data => {
+        if(!data || !data.docs || !data.num_found){
+            console.log("No books found");
+            return;
+        }
+        PAGINATION.setPageCount(data.num_found, perPage);
+       renderPageButtons();
+       displayBooks(data.docs);
 
     })
 
 }
 
-window.addEventListener('load', ()=>{
-    console.log('loaded')
-    searchParams.set('q', '*');
-    searchParams.set('limit', '10')
-    fetchBooks().then(displayBooks);
+const resetPage = () => {
+    PAGINATION.changePage(1);
+    search();
+}
 
+const renderPageButtons= ()=> {
+    const visiblePages = PAGINATION.visiblePages;
+    const currentPage = PAGINATION.currentPage;
+    const buttonStates = PAGINATION.buttonStates;
+
+    pages.innerHTML = '';
+    visiblePages.forEach(page=>{
+        const pageButton = document.createElement('button');
+        pageButton.classList.add('page-button');
+        if(page === currentPage)pageButton.classList.add('active');
+        pageButton.textContent = page;
+        pages.appendChild(pageButton);
+    })
+
+    caretButtons[0].disabled = !buttonStates.leftArrow;
+    caretButtons[1].disabled = !buttonStates.rightArrow;
+}
+
+pages.addEventListener('click', (e)=>{
+
+    if(e.target.classList.contains('page-button')){
+        document.querySelectorAll('.page-button.active').forEach(button => {
+            button.classList.remove('active');
+        });
+        e.target.classList.add('active');
+        const pageNum = parseInt(e.target.textContent);
+        PAGINATION.changePage(pageNum);
+        search();
+    }
+})
+
+caretButtons[0].addEventListener('click', ()=>{
+    if(caretButtons[0].disabled)return;
+    PAGINATION.onLeftArrowClick();
+    renderPageButtons();
+    search();
+})
+
+caretButtons[1].addEventListener('click', () => {
+    if (caretButtons[1].disabled)return;
+    PAGINATION.onRightArrowClick();
+    renderPageButtons();
+    search();
+});
+
+window.addEventListener('load', ()=>{
+    searchParams.set('subject', 'fiction');
+    search();
 })
 

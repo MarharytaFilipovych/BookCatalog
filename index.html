@@ -13,7 +13,7 @@
   </header>
   <div class="content">
     <section class="search">
-      <div class="search-bar">
+      <div class="search-bar shadow">
         <input id="title" type="text" placeholder="type title..."/>
         <button class="search-button"><img src="./images/search.png" alt="search-icon"></button>
       </div>
@@ -29,11 +29,14 @@
           <option>rating desc</option>
         </select>
       </div>
+      <div class="search-bar shadow">
+        <input id="year" type="number" placeholder="type year..." min="0" />
+        <button class="search-button"><img src="./images/search.png" alt="search-icon"></button>
+      </div>
 
       <div class="filter shadow">
         <select id="subject">
           <option value="">-- Select Subject --</option>
-
           <optgroup label="Fiction">
             <option value="fiction">fiction</option>
             <option value="fantasy">fantasy</option>
@@ -123,23 +126,25 @@
         </select>
       </div>
     </section>
+
+    <section class="books">
+
+    </section>
+
+
   </div>
 
 
-  <section class="books">
-
-  </section>
-
   <div class="pagination">
-  <button class="caret"><img src="/images/caret.png"/></button>
+    <button class="caret"><img src="./images/caret.png"/></button>
     <div class="pages">
 
     </div>
 
-    <button class="caret"><img src="/images/caret.png"/></button>
+    <button class="caret"><img src="./images/caret.png"/></button>
 
   </div>
   <footer class="shadow"><p>&copy;All rights reserved.</p></footer>
-<script src="index.js"></script>
+<script src="index.js" type="module"></script>
 </body>
 </html>
