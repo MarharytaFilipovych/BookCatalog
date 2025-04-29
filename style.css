@@ -1,0 +1,109 @@
+body{
+    background-color: #e0cdab;
+    padding: 0;
+    margin: 0;
+}
+button{
+    border: none;
+    background: none;
+}
+h1, h2, h3{
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.25);
+}
+.shadow{
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+
+}
+input, select{
+    border: none;
+    outline: none;
+    background: none;
+}
+.wrapper{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+.content{
+    flex: 1;
+}
+header, footer{
+    background-color: rgba(39, 72, 20, 0.79);
+
+}
+h1{
+    padding: 1.5rem;
+    text-align: center;
+    color: #e0cdab;
+    margin: 0;
+    font-size: 2.4rem;
+
+}
+.search{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.search-bar, .filter{
+    border: 0.2rem solid black;
+    background: #756ab4;
+    padding: 0.5rem;
+
+
+}
+
+.search-bar{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+}
+.search-bar input::placeholder, .search-bar input, .filter select{
+    border: none;
+    background: #756ab4;
+    color: #e0cdab;
+    font-family: Candara;
+    font-size: 1.1rem;
+
+}
+
+.caret img{
+    width: 2.5rem;
+    height: auto;
+}
+.caret:last-child{
+    transform: scaleX(-1);
+}
+.caret:hover{
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 3px #01090c);
+}
+.caret:last-child:hover{
+    transform: scale(1.1) scaleX(-1);
+    filter: drop-shadow(0 0 3px #01090c);
+}
+.search-bar img{
+    width: 1rem;
+    height: auto;
+    object-fit: contain;
+}
+.pagination{
+    justify-content: center;
+    display: flex;
+    gap:0.5rem;
+    align-items: center;
+}
+footer p{
+    text-align: center;
+    font-size: 1.3rem;
+    color: #e0cdab;
+
+}
+
+input::target-text{
+
+}
+

@@ -2,9 +2,144 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title>Book Catalog</title>
+  <link rel="stylesheet" href="style.css" >
+
+
 </head>
-<body>
-$END$
+<body class="wrapper">
+  <header class="shadow">
+    <h1>Book Catalog</h1>
+  </header>
+  <div class="content">
+    <section class="search">
+      <div class="search-bar">
+        <input id="title" type="text" placeholder="type title..."/>
+        <button class="search-button"><img src="./images/search.png" alt="search-icon"></button>
+      </div>
+      <div class="search-bar shadow">
+        <input id="author" type="text" placeholder="type author..."/>
+        <button class="search-button"><img src="./images/search.png" alt="search-icon"></button>
+      </div>
+      <div class="filter shadow">
+        <select id="sort">
+          <option>old</option>
+          <option>new</option>
+          <option>rating asc</option>
+          <option>rating desc</option>
+        </select>
+      </div>
+
+      <div class="filter shadow">
+        <select id="subject">
+          <option value="">-- Select Subject --</option>
+
+          <optgroup label="Fiction">
+            <option value="fiction">fiction</option>
+            <option value="fantasy">fantasy</option>
+            <option value="historical_fiction">historical fiction</option>
+            <option value="horror">horror</option>
+            <option value="humor">humor</option>
+            <option value="literature">literature</option>
+            <option value="magic">magic</option>
+            <option value="mystery_and_detective_stories">mystery and detective</option>
+            <option value="plays">plays</option>
+            <option value="poetry">poetry</option>
+            <option value="romance">romance</option>
+            <option value="science_fiction">science fiction</option>
+            <option value="short_stories">short stories</option>
+            <option value="thriller">thriller</option>
+            <option value="young_adult_fiction">young adult</option>
+          </optgroup>
+          <optgroup label="Arts">
+            <option value="architecture">architecture</option>
+            <option value="art__art_instruction">art instruction</option>
+            <option value="history_of_art__art__design_styles">art history</option>
+            <option value="dance">dance</option>
+            <option value="design">design</option>
+            <option value="fashion">fashion</option>
+            <option value="film">film</option>
+            <option value="graphic_design">graphic design</option>
+            <option value="music">music</option>
+            <option value="music_theory">music theory</option>
+            <option value="painting">painting</option>
+            <option value="photography">photography</option>
+          </optgroup>
+          <optgroup label="Children">
+            <option value="juvenile_fiction">children</option>
+            <option value="juvenile_literature">kids</option>
+            <option value="stories_in_rhyme">stories in rhyme</option>
+            <option value="infancy">baby</option>
+            <option value="bedtime">bedtime</option>
+            <option value="picture_books">picture books</option>
+          </optgroup>
+          <optgroup label="Science & Mathematics">
+            <option value="sciencemathematics">science and mathematics</option>
+            <option value="biology">biology</option>
+            <option value="chemistry">chemistry</option>
+            <option value="mathematics">mathematics</option>
+            <option value="physics">physics</option>
+            <option value="programming">programming</option>
+            <option value="science">science</option>
+          </optgroup>
+          <optgroup label="History">
+            <option value="history">history</option>
+            <option value="ancient_civilization">ancient civilization</option>
+            <option value="archaeology">archaeology</option>
+          </optgroup>
+          <optgroup label="Business & Finance">
+            <option value="management">management</option>
+            <option value="entrepreneurship">entrepreneurship</option>
+            <option value="business_economics">business economics</option>
+            <option value="success_in_business">business success</option>
+            <option value="finance">finance</option>
+          </optgroup>
+          <optgroup label="Health & Wellness">
+            <option value="cooking">cooking</option>
+            <option value="cookbooks">cookbooks</option>
+            <option value="mental_health">mental health</option>
+            <option value="exercise">exercise</option>
+            <option value="nutrition">nutrition</option>
+            <option value="self-help">self-help</option>
+          </optgroup>
+          <optgroup label="Animals">
+            <option value="bears">bears</option>
+            <option value="cats">cats</option>
+            <option value="kittens">kittens</option>
+            <option value="dogs">dogs</option>
+            <option value="puppies">puppies</option>
+          </optgroup>
+          <optgroup label="Biography">
+            <option value="biography">biography</option>
+            <option value="autobiography">autobiography</option>
+          </optgroup>
+          <optgroup label="Social Sciences">
+            <option value="anthropology">anthropology</option>
+            <option value="religion">religion</option>
+            <option value="political_science">political science</option>
+            <option value="psychology">psychology</option>
+          </optgroup>
+
+        </select>
+      </div>
+    </section>
+  </div>
+
+
+  <section class="books">
+
+  </section>
+
+  <div class="pagination">
+  <button class="caret"><img src="/images/caret.png"/></button>
+    <div class="pages">
+
+    </div>
+
+    <button class="caret"><img src="/images/caret.png"/></button>
+
+  </div>
+  <footer class="shadow"><p>&copy;All rights reserved.</p></footer>
+<script src="index.js"></script>
 </body>
 </html>
