@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Book Catalog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&family=Indie+Flower&family=Joti+One&family=Patrick+Hand&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" >
-
-
 </head>
 <body class="wrapper">
   <header class="shadow">
@@ -141,10 +143,11 @@
 
   <div id="pagination">
     <button id="show-more">show more</button>
-    <button class="caret"><img src="./images/caret.png" alt="left caret button"/></button>
-    <div class="pages"></div>
-    <button class="caret"><img src="./images/caret.png" alt="right caret button"/></button>
-
+    <div id="page-selector">
+      <button class="caret"><img src="./images/caret.png" alt="left caret button"/></button>
+      <div class="pages"></div>
+      <button class="caret"><img src="./images/caret.png" alt="right caret button"/></button>
+    </div>
   </div>
   <footer class="shadow"><p>&copy;All rights reserved.</p></footer>
 <script src="index.js" type="module"></script>

@@ -4,6 +4,7 @@ const baseUrl = "https://openlibrary.org";
 const descriptionBlock = document.getElementById("description");
 const error = document.getElementById('error');
 const noResultsMessage = document.getElementById('no-results');
+const loading = document.getElementById('loading');
 
 const fetchData  = async (url)=>{
     error.style.visibility = 'hidden';
@@ -40,11 +41,14 @@ export const fetchDetails = async (key)=>{
 
 const fillDescriptionBlock = async (key, authors, editionCount)=>{
     error.style.visibility = 'hidden';
+    loading.style.visibility = 'visible';
     const details = await fetchDetails (key);
+    loading.style.visibility = 'hidden';
     if (!details) {
         error.style.visibility = 'visible';
         return;
     }
+
     document.getElementById('description-text').innerHTML = `
             <article class="book-description">
               <h2>${details.title}</h2>

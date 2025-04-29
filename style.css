@@ -2,6 +2,8 @@ body{
     background-color: #e0cdab;
     padding: 0;
     margin: 0;
+    font-family: "Patrick Hand", cursive;
+
 }
 button{
     border: none;
@@ -15,6 +17,7 @@ h1, h2, h3{
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
 
 }
+
 input, select{
     border: none;
     outline: none;
@@ -36,9 +39,11 @@ input, select{
 
 .books{
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     justify-items: center;
     row-gap: 1rem;
+    width: 90%;
+    margin: 0 auto;
 }
 
 .book-card{
@@ -59,7 +64,7 @@ input, select{
 }
 .book-card h3{
     text-align: center;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     margin: 0.3rem;
 }
 
@@ -72,6 +77,7 @@ input, select{
     word-wrap: break-word;
     text-align: center;
     margin: 0.3rem;
+    font-size: 1.3rem;
 }
 
 .book-card img{
@@ -88,7 +94,7 @@ h1{
     text-align: center;
     color: #e0cdab;
     margin: 0;
-    font-size: 2.4rem;
+    font-size: 3rem;
 
 }
 .search{
@@ -97,6 +103,8 @@ h1{
     justify-content: space-around;
     flex-wrap: wrap;
     row-gap: 1rem;
+    width: 90%;
+    margin: 0 auto;
 }
 .search-bar, .filter{
     border: 0.2rem solid black;
@@ -177,11 +185,17 @@ button:hover{
 #pagination{
     justify-content: center;
     align-items: center;
+    gap: 0.6rem;
     display: none;
+}
+#page-selector{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 footer p{
     text-align: center;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     color: #e0cdab;
 
 }
@@ -195,7 +209,9 @@ footer p{
     background-color: rgba(183, 243, 151, 0.71);
     color: #052c02;
     font-weight: bold;
-    font-size: 1.3rem;
+    font-size: 1.7rem;
+    font-family: "Patrick Hand", cursive;
+
 }
 .page-button:hover{
     background-color: rgba(98, 248, 18, 0.71);
@@ -209,9 +225,7 @@ footer p{
 .book-description{
     text-align: center;
 }
-.book-description:last-child{
-    font-family: Ebrima
-}
+
 #description{
     display: none;
     position: fixed;
@@ -224,11 +238,14 @@ footer p{
     background: #756ab4;
     border: 1rem solid #1e1448;
     color: #e0cdab;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     z-index: 10000;
-    padding: 0 1rem;
+    padding: 1rem;
     overflow-y: auto ;
     overflow-x: hidden;
+}
+#description h2{
+    margin-top: 0;
 }
 
 #cross {
@@ -253,7 +270,7 @@ footer p{
     text-align: center;
     font-weight: bold;
     color: #052c02;
-    font-size: 2.3rem;
+    font-size: 2.5rem;
     display: none;
 
 }
@@ -265,4 +282,88 @@ footer p{
     font-weight: bold;
     padding: 0.5rem;
     border-radius: 30%;
+    font-family: "Patrick Hand", cursive;
+    font-size: 1.2rem;
+}
+
+@media only screen and  (max-width: 1400px) {
+    .books{
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+@media only screen and  (max-width: 1200px) {
+    .books{
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media only screen and (min-width: 768px) and (max-width: 980px) {
+    .wrapper{
+        gap: 2rem;
+    }
+    .content{
+        gap: 2rem;
+    }
+
+    .books{
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    #error {
+        width:20rem;
+    }
+
+    #loading{
+        width: 12rem;
+
+    }
+    .search-bar{
+        width: 12rem;
+    }
+
+    .search-bar input{
+        width: 9rem;
+    }
+
+    #no-results{
+        font-size: 2rem;
+        word-break: break-word;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .wrapper{
+        gap: 1rem;
+    }
+
+    .content{
+        gap: 1rem;
+    }
+    .books{
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    #error {
+        width:15rem;
+    }
+
+    #loading{
+        width: 9rem;
+    }
+
+    .search-bar{
+        width: 10rem;
+    }
+    .search-bar input{
+        width: 8rem;
+    }
+
+    #pagination{
+        flex-direction: column;
+    }
+
+    #no-results{
+        font-size: 1.7rem;
+        word-break: break-word;
+
+    }
 }
