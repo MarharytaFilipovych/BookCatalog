@@ -1,44 +1,90 @@
 import {displayBooks, fetchBooks} from "./books.js";
 import {Pagination} from "./pagination.js";
 
-const perPage = 20;
+let perPage = 20;
 const searchParams = new URLSearchParams();
-searchParams.set('limit', '20');
-
-const currentYear = new Date().getFullYear().toString();
-
 const PAGINATION = new Pagination(1, perPage, 100);
+let pageToFetch = 1;
 
+const pagination = document.getElementById('pagination')
 const titleInput = document.getElementById('title');
 const authorInput = document.getElementById('author');
 const sort = document.getElementById('sort');
-const searchButtons = document.querySelectorAll('.search-button');
 const subject = document.getElementById('subject');
 const year = document.getElementById('year');
 const pages = document.querySelector('.pages');
 const caretButtons = document.querySelectorAll('.caret');
-const error = document.getElementById('error');
 const loading = document.getElementById('loading');
-year.setAttribute('max', currentYear)
 const footer = document.querySelector('footer p')
+const showMoreButton = document.getElementById('show-more');
+const currentYear = new Date().getFullYear().toString();
+year.setAttribute('max', currentYear)
 footer.innerHTML+= " " + currentYear;
 
+const search = ()=>{
+    searchParams.set('limit', perPage.toString());
+    if(pageToFetch === PAGINATION.currentPage)searchParams.set('offset', ((pageToFetch - 1)*perPage).toString());
+    loading.style.visibility = 'visible';
+    fetchBooks(searchParams).then(async data => {
+        await displayBooks(data);
+        if(!data.num_found)pagination.style.display = 'none';
+        else{
+            pagination.style.display = 'flex';
+            PAGINATION.setPageCount(data.num_found, perPage);
+            renderPageButtons();
+            showMoreButton.disabled = PAGINATION.pageCount === data.docs.length;
 
-searchButtons.forEach((button, index) => {
-    button.addEventListener('click', () => {
-        if (index === 0) {
-            if (titleInput.value) searchParams.set('title', titleInput.value);
-            else searchParams.delete('title');
-        } else if (index === 1) {
-            if (authorInput.value) searchParams.set('author', authorInput.value);
-            else searchParams.delete('author');
-
-        }else if (index === 2){
-            if(year.value)searchParams.set('first_publish_year', year.value)
-            else searchParams.delete('first_publish_year')
         }
-        resetPage();
-    });
+        loading.style.visibility = 'hidden';
+
+    })
+}
+
+const resetPage = () => {
+    PAGINATION.changePage(1);
+    pageToFetch = 1;
+    perPage = 20;
+    scrollToTop();
+    search();
+}
+
+const renderPageButtons= ()=> {
+    pages.innerHTML = '';
+    PAGINATION.visiblePages.forEach(page=>{
+        const pageButton = document.createElement('button');
+        pageButton.classList.add('page-button');
+        if(page === PAGINATION.currentPage)pageButton.classList.add('active');
+        pageButton.textContent = page;
+        pages.appendChild(pageButton);
+    })
+    caretButtons[0].disabled = !PAGINATION.buttonStates.leftArrow;
+    caretButtons[1].disabled = !PAGINATION.buttonStates.rightArrow;
+}
+
+const scrollToTop = () =>{
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    })
+}
+
+
+titleInput.addEventListener('change', () => {
+    if (titleInput.value) searchParams.set('title', titleInput.value);
+    else searchParams.delete('title');
+    resetPage();
+});
+
+authorInput.addEventListener('change', () => {
+    if (authorInput.value) searchParams.set('author', authorInput.value);
+    else searchParams.delete('author');
+    resetPage();
+});
+
+year.addEventListener('change', () => {
+    if (year.value) searchParams.set('first_publish_year', year.value);
+    else searchParams.delete('first_publish_year');
+    resetPage();
 });
 
 sort.addEventListener('change', (e) => {
@@ -53,52 +99,7 @@ subject.addEventListener('change', (e)=>{
 
 })
 
-const search = ()=>{
-    const offset = (PAGINATION.currentPage - 1)*perPage;
-    searchParams.set('offset', offset.toString());
-    error.style.visibility = 'hidden';
-    loading.style.visibility = 'visible';
-
-   fetchBooks(searchParams).then(data => {
-        if(!data || !data.docs || !data.num_found){
-            error.style.visibility = 'visible';
-            loading.style.visibility = 'hidden';
-            console.log("No books found");
-            return;
-        }
-        PAGINATION.setPageCount(data.num_found, perPage);
-       renderPageButtons();
-       displayBooks(data.docs);
-       loading.style.visibility = 'hidden';
-    })
-
-}
-
-const resetPage = () => {
-    PAGINATION.changePage(1);
-    search();
-}
-
-const renderPageButtons= ()=> {
-    const visiblePages = PAGINATION.visiblePages;
-    const currentPage = PAGINATION.currentPage;
-    const buttonStates = PAGINATION.buttonStates;
-
-    pages.innerHTML = '';
-    visiblePages.forEach(page=>{
-        const pageButton = document.createElement('button');
-        pageButton.classList.add('page-button');
-        if(page === currentPage)pageButton.classList.add('active');
-        pageButton.textContent = page;
-        pages.appendChild(pageButton);
-    })
-
-    caretButtons[0].disabled = !buttonStates.leftArrow;
-    caretButtons[1].disabled = !buttonStates.rightArrow;
-}
-
 pages.addEventListener('click', (e)=>{
-
     if(e.target.classList.contains('page-button')){
         document.querySelectorAll('.page-button.active').forEach(button => {
             button.classList.remove('active');
@@ -106,6 +107,9 @@ pages.addEventListener('click', (e)=>{
         e.target.classList.add('active');
         const pageNum = parseInt(e.target.textContent);
         PAGINATION.changePage(pageNum);
+        pageToFetch = pageNum;
+        perPage = 20;
+        scrollToTop();
         search();
     }
 })
@@ -124,6 +128,11 @@ caretButtons[1].addEventListener('click', () => {
     search();
 });
 
+showMoreButton.addEventListener('click', ()=>{
+    pageToFetch++;
+    perPage+=20;
+    search();
+})
 window.addEventListener('load', ()=>{
     searchParams.set('subject', 'fiction');
     search();

@@ -17,14 +17,15 @@
     <section class="search">
       <div class="search-bar shadow">
         <input id="title" type="text" placeholder="type title..."/>
-        <button class="search-button"><img src="./images/search.png" alt="search-icon"></button>
+       <img class="search-img" src="./images/search.png" alt="search-icon">
       </div>
       <div class="search-bar shadow">
         <input id="author" type="text" placeholder="type author..."/>
-        <button class="search-button"><img src="./images/search.png" alt="search-icon"></button>
+        <img class="search-img" src="./images/search.png" alt="search-icon">
       </div>
       <div class="filter shadow">
         <select id="sort">
+          <option value="">-- select sort --</option>
           <option>old</option>
           <option>new</option>
           <option>rating asc</option>
@@ -33,12 +34,12 @@
       </div>
       <div class="search-bar shadow">
         <input id="year" type="number" placeholder="type year..." min="0" />
-        <button class="search-button"><img src="./images/search.png" alt="search-icon"></button>
+        <img class="search-img" src="./images/search.png" alt="search-icon">
       </div>
 
       <div class="filter shadow">
         <select id="subject">
-          <option value="">-- Select Subject --</option>
+          <option value="">-- select subject --</option>
           <optgroup label="Fiction">
             <option value="fiction">fiction</option>
             <option value="fantasy">fantasy</option>
@@ -129,21 +130,20 @@
       </div>
     </section>
 
-    <section class="books">
-
-    </section>
-
-
+    <section class="books"></section>
+    <div id="description">
+      <img src="./images/cross.png" alt="cross" id="cross">
+      <div id="description-text"></div>
+    </div>
+    <p id="no-results">No books found matching your criteria</p>
   </div>
 
 
-  <div class="pagination">
-    <button class="caret"><img src="./images/caret.png"/></button>
-    <div class="pages">
-
-    </div>
-
-    <button class="caret"><img src="./images/caret.png"/></button>
+  <div id="pagination">
+    <button id="show-more">show more</button>
+    <button class="caret"><img src="./images/caret.png" alt="left caret button"/></button>
+    <div class="pages"></div>
+    <button class="caret"><img src="./images/caret.png" alt="right caret button"/></button>
 
   </div>
   <footer class="shadow"><p>&copy;All rights reserved.</p></footer>
