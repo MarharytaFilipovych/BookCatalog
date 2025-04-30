@@ -78,6 +78,11 @@ input, select{
     text-align: center;
     margin: 0.3rem;
     font-size: 1.3rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }
 
 .book-card img{
