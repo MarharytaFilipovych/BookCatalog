@@ -33,13 +33,12 @@ export const fetchDetails = async (key)=>{
     if(!result) return null;
     return {
         subjects: result.subjects ? result.subjects.slice(0, 5).map(s => s.toLowerCase()).join(', ') : 'unknown',
-        date: result.first_publish_date ?? 'unknown date',
         description: result.description.value  ?? 'without description',
         title: result.title
     }
 }
 
-const fillDescriptionBlock = async (key, authors, editionCount)=>{
+const fillDescriptionBlock = async (key, authors, editionCount, year)=>{
     error.style.visibility = 'hidden';
     loading.style.visibility = 'visible';
     const details = await fetchDetails (key);
@@ -52,7 +51,7 @@ const fillDescriptionBlock = async (key, authors, editionCount)=>{
     document.getElementById('description-text').innerHTML = `
             <article class="book-description">
               <h2>${details.title}</h2>
-              <p>This book was written by ${authors} on <strong>${details.first_publish_date}</strong>. There are <strong>${editionCount}</strong> editions.</p>
+              <p>This book was written by ${authors} in <strong>${year ?? 'unknown'}</strong>. There are <strong>${editionCount}</strong> editions.</p>
               <p><strong>Subjects</strong>: ${details.subjects}</p>
               <p>${details.description}</p>
             </article>`;
@@ -85,7 +84,7 @@ export const displayBooks = async (data) => {
 
         bookSection.appendChild(bookCard);
         bookCard.addEventListener('click', async ()=>{
-           await fillDescriptionBlock(book.key, authors, book.edition_count);
+           await fillDescriptionBlock(book.key, authors, book.edition_count, book.first_publish_year);
         })
     })
     document.getElementById('cross').addEventListener('click', () => {

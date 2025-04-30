@@ -2,7 +2,7 @@ import {displayBooks, fetchBooks} from "./books.js";
 import {Pagination} from "./pagination.js";
 
 let perPage = 20;
-const searchParams = new URLSearchParams();
+let searchParams = new URLSearchParams();
 const PAGINATION = new Pagination(1, perPage, 100);
 let pageToFetch = 1;
 
@@ -21,10 +21,19 @@ const currentYear = new Date().getFullYear().toString();
 year.setAttribute('max', currentYear)
 footer.innerHTML+= " " + currentYear;
 
+const updateFormValues = () => {
+    if (searchParams.has('title')) titleInput.value = searchParams.get('title');
+    if (searchParams.has('author')) authorInput.value = searchParams.get('author');
+    if (searchParams.has('first_publish_year')) year.value = searchParams.get('first_publish_year');
+    if (searchParams.has('sort')) sort.value = searchParams.get('sort');
+    if (searchParams.has('subject'))subject.value = searchParams.get('subject');
+};
+
 const search = ()=>{
     searchParams.set('limit', perPage.toString());
     if(pageToFetch === PAGINATION.currentPage)searchParams.set('offset', ((pageToFetch - 1)*perPage).toString());
     loading.style.visibility = 'visible';
+    localStorage.setItem('searchParams', searchParams.toString());
     fetchBooks(searchParams).then(async data => {
         await displayBooks(data);
         if(!data.num_found)pagination.style.display = 'none';
@@ -133,8 +142,17 @@ showMoreButton.addEventListener('click', ()=>{
     perPage+=20;
     search();
 })
+
 window.addEventListener('load', ()=>{
-    searchParams.set('subject', 'fiction');
+    const savedParams = localStorage.getItem('searchParams');
+    if (savedParams) {
+        searchParams = new URLSearchParams(savedParams);
+        updateFormValues();
+    }
+    if (!searchParams.has('subject')){
+        searchParams.set('subject', 'fiction');
+        subject.value = 'fiction';
+    }
     search();
 })
 
