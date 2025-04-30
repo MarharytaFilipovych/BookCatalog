@@ -372,3 +372,13 @@ footer p{
 
     }
 }
+
+@media only screen and (max-width: 768px) {
+    .books{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+}
